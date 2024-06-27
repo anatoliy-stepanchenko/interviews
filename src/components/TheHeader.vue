@@ -11,7 +11,7 @@
     <template #end>
       <span
         v-if="userStore.userId"
-        @click="userStore.userId = ''"
+        @click="signOutMethod"
         class="flex align-items-center menu-exit"
       >
         <span class="pi pi-sign-out p-menuitem-icon">Вихід</span>
@@ -25,8 +25,12 @@ import { ref } from 'vue'
 import type { ComputedRef } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { computed } from 'vue'
+import { getAuth, signOut } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
+
+const router = useRouter()
 
 interface IMenuItem {
   label: string
@@ -61,6 +65,11 @@ const items = ref<IMenuItem[]>([
     show: computed((): boolean => !!userStore.userId)
   }
 ])
+
+const signOutMethod = async (): Promise<void> => {
+  await signOut(getAuth())
+  router.push('/auth')
+}
 </script>
 
 <style scoped>
