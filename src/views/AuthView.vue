@@ -1,5 +1,5 @@
 <template>
-  <!-- <app-toast position="bottom-right" /> -->
+  <app-toast position="bottom-right" />
   <div class="flex justify-content-center p-2">
     <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
       <div class="text-center mb-3">
@@ -31,8 +31,16 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
 
+const email = ref<string>('')
+const password = ref<string>('')
 const isLogin = ref<boolean>(true)
+const isLoading = ref<boolean>(false)
+const router = useRouter()
+const toast = useToast()
 
 const subtitleText = computed(() => {
   return isLogin.value ? 'Акаунта ще не має?' : 'Акаунт вже існує?'
@@ -42,8 +50,48 @@ const linkAccountText = computed(() => {
   return isLogin.value ? 'Створіть зараз' : 'Ввійдіть в нього'
 })
 
+const submitButtonText = computed(() => {
+  return isLogin.value ? 'Вхід' : 'Реєстрація'
+})
+
 const toggleAuth = () => {
   isLogin.value = !isLogin.value
+}
+
+const submitForm = (): void => {
+  if (isLogin.value) {
+    signIn()
+  } else {
+    singUp()
+  }
+}
+
+const singUp = async (): Promise<void> => {
+  isLoading.value = true
+  try {
+    await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+    router.push('/')
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 })
+    }
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const signIn = async (): Promise<void> => {
+  isLoading.value = true
+  try {
+    await signInWithEmailAndPassword(getAuth(), email.value, password.value)
+    router.push('/')
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 })
+    }
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
