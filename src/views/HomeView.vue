@@ -32,7 +32,6 @@
 import { ref, computed } from 'vue'
 import type { IInterview } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
-import { getAuth } from 'firebase/auth'
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'

@@ -12,6 +12,7 @@ import Aura from '@primevue/themes/aura'
 import Menubar from 'primevue/menubar'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -21,6 +22,7 @@ import Column from 'primevue/column'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import Message from 'primevue/message'
+import Textarea from 'primevue/textarea'
 
 import App from './App.vue'
 import router from './router'
@@ -50,6 +52,7 @@ app.use(PrimeVue, {
 app.component('app-menubar', Menubar)
 app.component('app-button', Button)
 app.component('app-input-text', InputText)
+app.component('app-input-number', InputNumber)
 app.component('app-toast', Toast)
 app.component('app-progress-spinner', ProgressSpinner)
 app.component('app-card', Card)
@@ -57,5 +60,6 @@ app.component('app-datatable', DataTable)
 app.component('app-column', Column)
 app.component('app-dialog', ConfirmDialog)
 app.component('app-message', Message)
+app.component('app-textarea', Textarea)
 
 app.mount('#app')
