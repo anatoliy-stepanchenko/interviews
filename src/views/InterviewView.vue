@@ -42,6 +42,36 @@
           </div>
         </div>
         <app-button label="Додати етап" severity="info" icon="pi pi-plus" class="mb-3" />
+
+        <div class="interview-stage">
+          <div class=".flex flex-column gap-2">
+            <label for="stageCalendar">Дата проходження етапу</label>
+            <app-calendar
+              class="input mb-3"
+              id="stageCalendar"
+              dateFormat="dd.mm.yyyy"
+            ></app-calendar>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label for="stageDescription">Коментар</label>
+            <app-textarea class="input mb-3" rows="5" />
+          </div>
+          <app-button label="Видалити етап" severity="danger" />
+        </div>
+
+        <div class="flex flex-wrap gap-3 mb-3">
+          <div class="flex align-items-center">
+            <app-radio inputId="interviewResult1" name="result" value="Refusal" />
+            <label for="interviewResult1" class="ml-2">Відмова</label>
+          </div>
+
+          <div class="flex align-items-center">
+            <app-radio inputId="interviewResult2" name="result" value="Offer" />
+            <label for="interviewResult2" class="ml-2">Офер</label>
+          </div>
+          <app-button label="Зберігти" icon="pi pi-save" />
+        </div>
       </template>
     </app-card>
   </div>
