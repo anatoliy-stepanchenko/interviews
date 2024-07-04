@@ -70,14 +70,35 @@
             <app-radio inputId="interviewResult2" name="result" value="Offer" />
             <label for="interviewResult2" class="ml-2">Офер</label>
           </div>
-          <app-button label="Зберігти" icon="pi pi-save" />
         </div>
+        <app-button label="Зберігти" icon="pi pi-save" />
       </template>
     </app-card>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { useUserStore } from '@/stores/user'
+import { useRoute } from 'vue-router'
+import type { IInterview } from '@/interfaces'
+
+const db = getFirestore()
+const userStore = useUserStore()
+const route = useRoute()
+
+const interview = ref<IInterview>()
+
+const docref = doc(db, `users/${userStore.userId}/interviews`, route.params.id as string)
+
+const getData = async (): Promise<void> => {
+  const docSnap = await getDoc(docref)
+  interview.value = docSnap.data() as IInterview
+}
+
+onMounted(async () => await getData())
+</script>
 
 <style scoped>
 .content-interview {
