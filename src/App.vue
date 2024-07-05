@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <app-progress-spinner v-if="isLoading" />
+  <app-progress-spinner v-if="isLoading" class="flex justify-content-center mt-8" />
   <div v-else class="container">
     <TheHeader />
     <div class="content">
