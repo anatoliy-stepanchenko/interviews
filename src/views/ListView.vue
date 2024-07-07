@@ -11,7 +11,7 @@
       <app-column field="hrName" header="Ім'я HR"></app-column>
       <app-column field="vacancyLink" header="Вакансія">
         <template #body="slotProps">
-          <a :href="slotProps.data.vacancyLink" target="_blank">{{ slotProps.data.vacancyLink }}</a>
+          <a :href="slotProps.data.vacancyLink" target="_blank">Посилання</a>
         </template>
       </app-column>
       <app-column field="email" header="Пошта"></app-column>
@@ -35,6 +35,37 @@
               <span class="contacts__icon pi pi-phone"></span>
             </a>
           </div>
+        </template>
+      </app-column>
+      <app-column header="Пройдені етапи">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.stages">Не заповнено</span>
+          <div v-else class="interview-stages">
+            <app-badge
+              v-for="(stage, i) in slotProps.data.stages"
+              v-tooltip.top="stage.name"
+              :key="i"
+              :value="i + 1"
+              rounded
+            />
+          </div>
+        </template>
+      </app-column>
+      <app-column header="Зарплатня">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.salaryFrom">Не заповнено</span>
+          <span v-else>{{ slotProps.data.salaryFrom }} - {{ slotProps.data.salaryTo }}</span>
+        </template>
+      </app-column>
+      <app-column header="Результат">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.result">Не заповнено</span>
+          <template v-else>
+            <app-badge
+              :severity="slotProps.data.result === 'Offer' ? 'success' : 'danger'"
+              :value="slotProps.data.result === 'Offer' ? 'Оффер' : 'Відмова'"
+            />
+          </template>
         </template>
       </app-column>
       <app-column>
@@ -131,5 +162,9 @@ onMounted(async () => {
 }
 .contacts__icon {
   font-size: 20px;
+}
+.interview-stages {
+  display: flex;
+  gap: 5px;
 }
 </style>
