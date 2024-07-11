@@ -33,12 +33,12 @@ import App from './App.vue'
 import router from './router'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAfISk9PhGuhgJ8lWrOTo0_Ocglmtp8duw',
-  authDomain: 'interviews-ac397.firebaseapp.com',
-  projectId: 'interviews-ac397',
-  storageBucket: 'interviews-ac397.appspot.com',
-  messagingSenderId: '1085004829146',
-  appId: '1:1085004829146:web:72e34916da6dde29b7b0e3'
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 }
 
 initializeApp(firebaseConfig)
