@@ -12,20 +12,20 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-
 import { getFirestore, collection, query, orderBy, getDocs } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user'
 import type { IInterview } from '@/interfaces'
+import type { ChartData, ChartOptions } from 'chart.js'
 
 const userStore = useUserStore()
 const db = getFirestore()
 
-const chartData = ref()
-const chartOptions = ref(null)
+const chartData = ref<ChartData<'doughnut'>>()
+const chartOptions = ref<ChartOptions<'doughnut'>>()
 const interviews = ref<IInterview[]>([])
 
 const getAllInterviews = async <T extends IInterview>(): Promise<T[]> => {
-  let getData = query(
+  const getData = query(
     collection(db, `users/${userStore.userId}/interviews`),
     orderBy('createdAt', 'desc')
   )
@@ -41,7 +41,7 @@ onMounted(async () => {
   chartOptions.value = setChartOptions()
 })
 
-const setChartData = () => {
+const setChartData = (): ChartData<'doughnut'> => {
   const documentStyle = getComputedStyle(document.body)
 
   const data: number[] = [0, 0, 0]
@@ -76,7 +76,7 @@ const setChartData = () => {
   }
 }
 
-const setChartOptions = () => {
+const setChartOptions = (): ChartOptions<'doughnut'> => {
   const documentStyle = getComputedStyle(document.documentElement)
   const textColor = documentStyle.getPropertyValue('--p-text-color')
 
@@ -84,11 +84,11 @@ const setChartOptions = () => {
     plugins: {
       legend: {
         labels: {
-          cutout: '60%',
           color: textColor
         }
       }
-    }
+    },
+    cutout: '60%' // це має бути на рівні налаштувань чарта, а не легенди
   }
 }
 </script>
