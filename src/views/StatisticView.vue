@@ -5,7 +5,7 @@
       type="doughnut"
       :data="chartData"
       :options="chartOptions"
-      class="w-full md:w-[30rem]"
+      class="w-full md:w-[30rem] chart"
     />
   </div>
 </template>
@@ -92,3 +92,12 @@ const setChartOptions = () => {
   }
 }
 </script>
+
+<style scoped>
+.chart {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+}
+</style>
